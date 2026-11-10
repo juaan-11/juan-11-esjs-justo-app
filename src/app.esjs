@@ -1,0 +1,31 @@
+importar { Terminal } desde "@es-js/terminal"
+importar { obtenerJson } desde "https://desarrollo-aplicaciones.vercel.app/2024/code/obtener-json.js"
+importar { validarSecreto } desde "https://desarrollo-aplicaciones.vercel.app/2024/code/validar-secreto.js"
+
+Terminal.escribir("=== cotizacion del Dolar Blue  ===")
+Terminal.escribir("")
+
+Terminal.escribir("¡Hola! Ingresa tu DNI, sin puntos. Solo numeros:")
+const dni= esperar Terminal.leer()
+
+Terminal.escribir("Ingresa tu Palabra Secreta:")
+const palabraSecreta= esperar Terminal.leer()
+
+Terminal.escribir("cargando...")
+
+si(esperar validarSecreto(dni, palabraSecreta)){
+  Terminal.escribir("La Palabra Secreta es correcta")
+  Terminal.escribir("")
+
+  const dolarBlue= esperar obtenerJson('https://dolarapi.com/v1/dolares/blue')
+
+  const promedio= (dolarBlue.compra + dolarBlue.venta) / 2
+
+Terminal.escribir("Dolar Blue")
+Terminal.escribir("Precio de Venta: $" + dolarBlue.venta)
+Terminal.escribir("Precio de Compra: $" + dolarBlue.compra)
+Terminal.escribir("Promedio Compra/Venta: $" + promedio)
+Terminal.escribir("Fecha de Cotizacion:" + dolarBlue.fechaActualizacion)
+} sino {
+Terminal.escribir("La Palabra Secreta es incorrecta")
+}
